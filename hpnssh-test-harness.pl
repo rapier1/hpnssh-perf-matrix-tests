@@ -499,7 +499,7 @@ Usage: hpnssh-test-harness.pl
                  of runs.
        --extended=\"\"
                  Additional options for ssh.
- 		 eg -oMPTCP=yes
+		 e.g. -oMPTCP=yes multiple options can be used.
        --quiet no printed output at all.
        --help print this.
 ");

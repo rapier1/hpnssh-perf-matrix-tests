@@ -228,12 +228,12 @@ sub runTests {
 		    } else {
 			$binary = "$conf{root}/$source/bin/ssh";
 		    }
-		    my $command = "dd if=/dev/zero bs=1M count=$size | $binary $conf{verbose} $conf{protocol} $modified_cipher -p $port $conf{target} 'cat > /dev/null'";
+		    my $command = "dd if=/dev/zero bs=1M count=$size | $binary $conf{verbose} $conf{protocol} $extended $modified_cipher -p $port $conf{target} 'cat > /dev/null'";
 
 		    #run the command and capture output
 		    runCommand($command, $source, $dest, $cipher, "outbound", $delay);
 		    if ($bidirectional == 1) {
-			$command = "$binary $conf{verbose} $conf{protocol} $modified_cipher -p $port $conf{target} 'dd if=/dev/zero bs=1M count=$size' > /dev/null";
+			$command = "$binary $conf{verbose} $conf{protocol} $extended $modified_cipher -p $port $conf{target} 'dd if=/dev/zero bs=1M count=$size' > /dev/null";
 			runCommand($command, $source, $dest, $cipher, "inbound", $delay);
 		    }
 		}
@@ -484,6 +484,7 @@ our %data = {};
 GetOptions("config=s" => \$conf_file,
            "outfile=s" => \$outfile,
            "periodic!" => \$periodic,
+	   "extended=s" => \$extended,
            "help!" => \$help,
            "quiet!" => \$quiet);
 
@@ -496,6 +497,9 @@ Usage: hpnssh-test-harness.pl
                  in the config.
        --periodic Print updated stats after each set
                  of runs.
+       --extended=\"\"
+                 Additional options for ssh.
+ 		 eg -oMPTCP=yes
        --quiet no printed output at all.
        --help print this.
 ");
